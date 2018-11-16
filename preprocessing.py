@@ -4,6 +4,7 @@ import itertools
 import string
 import logging
 import collections
+import pandas as pd
 from utils import LazyProperty
 
 # NLP
