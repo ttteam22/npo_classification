@@ -1,7 +1,21 @@
-# nko_classification
+# NPO classification
 
 ### Задача
-Разработать алгоритм с помощью технологий машинного обучения (AI) для анализа набора сайтов НКО по виду деятельности на основании текстового описания на сайте этой НКО.
+Мультиклассовая классификация набора сайтов НКО по виду деятельности на основании текстового описания на сайте этой НКО.
 
 ### Данные
-Собранный вручную набор сайтов НКО с категоризацией по виду деятельности - https://ngodata.ru/dataset/ngo_web.
+https://ngodata.ru/dataset/ngo_web
+
+
+
+
+
+
+
+
+https://rusvectores.org/ru/models/
+
+https://github.com/google-research/bert
+
+https://github.com/huggingface/pytorch-pretrained-BERT
+
