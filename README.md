@@ -14,7 +14,7 @@ https://ngodata.ru/dataset/ngo_web
 
 
 
-
-https://github.com/google-research/bert
-
 https://rusvectores.org/ru/models/
+https://github.com/google-research/bert
+https://github.com/huggingface/pytorch-pretrained-BERT
+
