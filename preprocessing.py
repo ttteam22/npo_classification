@@ -4,6 +4,7 @@ import itertools
 import string
 import logging
 import collections
+import numpy as np
 import pandas as pd
 from utils import LazyProperty
 
@@ -16,6 +17,9 @@ from natasha import NamesExtractor
 from alphabet_detector import AlphabetDetector
 
 import word_lists
+# Plotting
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 logger = logging.getLogger()
 logging.basicConfig(level=logging.DEBUG, format='%(levelname)s %(name)s %(funcName)s %(message)s')
