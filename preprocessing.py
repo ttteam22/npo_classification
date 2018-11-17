@@ -47,7 +47,7 @@ class PreprocessingInterface(object):
         self.unwanted_trans = str.maketrans(self.unwanted_punct,
                                             ''.join([' ' for x in self.unwanted_punct]))
         self.padding_punct = """!"#$%&\'()*+,;<=>?[\\]^`{|}~/«»"""
-        self.full_punct = string.punctuation + '«-–»'
+        self.full_punct = string.punctuation + self.unwanted_punct + '«-–»-:'
 
 
     def split_paragraph(raw: str):
