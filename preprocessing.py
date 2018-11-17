@@ -59,12 +59,21 @@ class PreprocessingInterface(object):
     # ======================================== #
     # ########## STRING PROCESSING ########### #
     # ======================================== #
+    
+    def makeshift_clean(self, txt):
+        txt = txt.replace('\xa0', ' ')
+        txt_list = txt.split('\n')
+        txt = ' '.join([x.lower() for x in txt_list])
+        txt = txt.translate(self.unwanted_trans)
+        return ' '.join(txt.lower().split())
+    
     @staticmethod
     def normalize(raw: str) -> str:
         """ 1. lower
             2. strip
             3. remove line break symbols
         """
+        raw = raw.replace('\xa0', ' ')
         line_break_cleaning = str.maketrans('\r\t.', '\n\n\n')
         result = raw.lower().translate(line_break_cleaning).strip()
         return result
