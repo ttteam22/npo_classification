@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
-import cyrtranslit
 import re
 from langdetect import detect
 import requests
@@ -58,7 +57,3 @@ def get_filtered_text(url):
     except:
         print("Error: ", url)
         return None
-
-
-def get_title(url) -> str:
-    return data_filtered

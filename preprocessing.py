@@ -15,6 +15,7 @@ import pymorphy2
 from pymystem3 import Mystem
 from natasha import NamesExtractor
 from alphabet_detector import AlphabetDetector
+from razdel import tokenize
 
 import word_lists
 # Plotting
@@ -90,8 +91,12 @@ class PreprocessingInterface(object):
         return normal_text
 
     @staticmethod
-    def tokenize(raw: str) -> Tokenlist:
+    def nltk_tokenize(raw: str) -> Tokenlist:
         return nltk.word_tokenize(raw)
+
+    @staticmethod
+    def razdel_tokenize(raw: str):
+        return list(tokenize(raw))
 
     def is_punct(self, token) -> bool:
         """ True only if all chars are punct """
@@ -415,7 +420,7 @@ class PreprocessingInterface(object):
         """ Apply all the methods to raw string """
         normalized = self.normalize(raw)
         padded = self.pad_punctuation(normalized)
-        tokenized = self.tokenize(padded)
+        tokenized = self.nltk_tokenize(padded)
         no_punct = self.remove_punct(tokenized)
         no_stops = self.remove_stopwords(no_punct)
         cut_by_len = [t for t in no_stops if len(t) < 25]
@@ -425,7 +430,7 @@ class PreprocessingInterface(object):
     def apply_short_pipeline(self, raw: str) -> Tokenlist:
         """ Preprocessing for manual input in window form on client-side """
         normalized = self.normalize(raw)
-        tokenized = self.tokenize(normalized)
+        tokenized = self.nltk_tokenize(normalized)
         no_punct = self.remove_punct(tokenized)
         no_stopwords = self.remove_stopwords(no_punct)
         lemmatized = self.lemmatize_with_pymorphy(no_stopwords)
