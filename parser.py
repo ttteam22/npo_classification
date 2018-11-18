@@ -3,6 +3,7 @@ from urllib.request import Request, urlopen
 import re
 from langdetect import detect
 import requests
+from requests.exceptions import MissingSchema
 
 url = "http://www.rbfondveteranov.ru/"
 
@@ -25,9 +26,19 @@ def get_links(url):
     
     except BaseException:
         return None
+    
+def fix_url(url):
+    """ Adds  http prefix """
+    if not isinstance(url, str):
+        return None
+    if len(url)<2:
+        return None
+    if not url.startswith("http"):
+        return "http://"+url
+    return url
 
 def get_text_contents(url) -> list:
-    # html = urlopen(url).read()
+    prefix = ["http://", "https://"]
     try:
         r = requests.get(url, timeout=(5.05, 27))
         html = r.text
@@ -38,9 +49,22 @@ def get_text_contents(url) -> list:
         data_filtered = [each.strip() for each in data if each!="\n" and each!=" "]
         data_filtered = [each for each in data_filtered if each!=""]
         return data_filtered
-    except BaseException as e:
-        print("Error: {}, url: {}".format(e, url))
-        return None
+    except MissingSchema:
+        for each in prefix:
+            try:
+                r = requests.get(each+url, timeout=(5.05, 27))
+                html = r.text
+                soup = BeautifulSoup(html)
+                data = soup.findAll(text=True)
+                if isinstance(data, str):
+                    return [data]
+                data_filtered = [each.strip() for each in data if each!="\n" and each!=" "]
+                data_filtered = [each for each in data_filtered if each!=""]
+                return data_filtered
+            except BaseExceptions as e:
+                print("Error: {} {}".format(e, url))
+        
+
 
 def get_filtered_text(url):
     result = []

@@ -127,6 +127,10 @@ class PreprocessingInterface(object):
             return False
         else:
             return self.alphabet_detector.only_alphabet_chars(token, 'CYRILLIC')
+        
+    def filter_non_cyrillic(self, tokenlist: str):
+        cyrillic = [t for t in tokenlist if self.alphabet_detector.only_alphabet_chars(t, "CYRILLIC")]
+        return cyrillic
 
     # ======================================== #
     # ########### POS/LEMMATIZING ############ #
