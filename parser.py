@@ -13,7 +13,6 @@ def get_links(url):
         domain = url.split(".")[0]
         r = requests.get(url)
         html = r.text
-        # html = urlopen(url).read()
         soup = BeautifulSoup(html)
         for link in soup.findAll('a'):
             ref = link.get('href')
@@ -38,7 +37,6 @@ def fix_url(url):
     return url
 
 def get_text_contents(url) -> list:
-    prefix = ["http://", "https://"]
     try:
         r = requests.get(url, timeout=(5.05, 27))
         html = r.text
@@ -50,6 +48,7 @@ def get_text_contents(url) -> list:
         data_filtered = [each for each in data_filtered if each!=""]
         return data_filtered
     except MissingSchema:
+        prefix = ["http://", "https://"]
         for each in prefix:
             try:
                 r = requests.get(each+url, timeout=(5.05, 27))
