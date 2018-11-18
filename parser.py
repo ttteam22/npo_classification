@@ -11,7 +11,7 @@ def get_links(url):
         domain = url.split(".")[0]
         r = requests.get(url)
         html = r.text
-        soup = BeautifulSoup(html)
+        soup = BeautifulSoup(html, html5lib)
         for link in soup.findAll('a'):
             ref = link.get('href')
             try:
