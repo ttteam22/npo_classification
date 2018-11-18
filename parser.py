@@ -5,8 +5,6 @@ from langdetect import detect
 import requests
 from requests.exceptions import MissingSchema
 
-url = "http://www.rbfondveteranov.ru/"
-
 def get_links(url):
     try:
         links = []
@@ -25,16 +23,19 @@ def get_links(url):
     
     except BaseException:
         return None
+
+def link_splitter(url_string):
+    result = []
+    urls = []
     
-def fix_url(url):
-    """ Adds  http prefix """
-    if not isinstance(url, str):
-        return None
-    if len(url)<2:
-        return None
-    if not url.startswith("http"):
-        return "http://"+url
-    return url
+    for url in url_string.split(","):
+        urls.append(url)
+        
+    for url in urls:
+        for each in url.split("\n"):
+            result.append(each)
+            
+    return result
 
 def get_text_contents(url) -> list:
     try:
@@ -47,6 +48,7 @@ def get_text_contents(url) -> list:
         data_filtered = [each.strip() for each in data if each!="\n" and each!=" "]
         data_filtered = [each for each in data_filtered if each!=""]
         return data_filtered
+    
     except MissingSchema:
         prefix = ["http://", "https://"]
         for each in prefix:
@@ -63,8 +65,6 @@ def get_text_contents(url) -> list:
             except BaseExceptions as e:
                 print("Error: {} {}".format(e, url))
         
-
-
 def get_filtered_text(url):
     result = []
     print(url)
