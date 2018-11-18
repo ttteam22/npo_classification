@@ -8,10 +8,10 @@ from requests.exceptions import MissingSchema, ReadTimeout, ConnectTimeout, Conn
 def get_links(url):
     try:
         links = []
-        domain = url.split(".")[0]
+        # domain = url.split(".")[0]
         r = requests.get(url)
         html = r.text
-        soup = BeautifulSoup(html, html5lib)
+        soup = BeautifulSoup(html, features="lxml")
         for link in soup.findAll('a'):
             ref = link.get('href')
             try:
@@ -56,7 +56,7 @@ def get_text_contents(url) -> list:
             try:
                 r = requests.get(each+url, timeout=(5.05, 27))
                 html = r.text
-                soup = BeautifulSoup(html)
+                soup = BeautifulSoup(html, features="html5lib")
                 data = soup.findAll(text=True)
                 if isinstance(data, str):
                     return [data]
