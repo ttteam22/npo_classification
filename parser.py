@@ -3,7 +3,7 @@ from urllib.request import Request, urlopen
 import re
 from langdetect import detect
 import requests
-from requests.exceptions import MissingSchema, ReadTimeout, ConnectTimeout
+from requests.exceptions import MissingSchema, ReadTimeout, ConnectTimeout, ConnectionError
 
 def get_links(url):
     try:
@@ -42,7 +42,7 @@ def get_text_contents(url) -> list:
     try:
         r = requests.get(url, timeout=(5.05, 35), headers=headers)
         html = r.text
-        soup = BeautifulSoup(html, 'lxml')
+        soup = BeautifulSoup(html)
         data = soup.findAll(text=True)
         if isinstance(data, str):
             return [data]
@@ -56,7 +56,7 @@ def get_text_contents(url) -> list:
             try:
                 r = requests.get(each+url, timeout=(5.05, 27))
                 html = r.text
-                soup = BeautifulSoup(html, 'lxml')
+                soup = BeautifulSoup(html)
                 data = soup.findAll(text=True)
                 if isinstance(data, str):
                     return [data]
@@ -65,7 +65,7 @@ def get_text_contents(url) -> list:
                 return data_filtered
             except BaseExceptions as e:
                 print("Error: {} {}".format(e, url))
-    except ReadTimeout, ConnectTimeout:
+    except (ReadTimeout, ConnectTimeout, ConnectionError):
         pass
         
 def get_filtered_text(url):
