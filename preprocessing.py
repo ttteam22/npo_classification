@@ -46,7 +46,7 @@ class PreprocessingInterface(object):
         self.unwanted_punct = ",.:!?0#№«»()-\"'_="
         self.unwanted_trans = str.maketrans(self.unwanted_punct,
                                             ''.join([' ' for x in self.unwanted_punct]))
-        self.padding_punct = """!"#$%&\'()*+,;<=>?[\\]^`{|}~/«»"""
+        self.padding_punct = """!"#$%&\'()*_+-,;<=>?[\\]^`{|}~/«»"""
         self.full_punct = string.punctuation + self.unwanted_punct + '«-–»-:'
 
 
@@ -96,12 +96,12 @@ class PreprocessingInterface(object):
 
     @staticmethod
     def razdel_tokenize(raw: str):
-        return list(tokenize(raw))
+        return [each.text for each in list(tokenize(raw))]
 
     def is_punct(self, token) -> bool:
         """ True only if all chars are punct """
         for c in token:
-            if c not in self.full_punct:
+            if str(c) not in self.full_punct:
                 return False
         return True
 
@@ -127,6 +127,10 @@ class PreprocessingInterface(object):
             return False
         else:
             return self.alphabet_detector.only_alphabet_chars(token, 'CYRILLIC')
+        
+    def filter_non_cyrillic(self, tokenlist: str):
+        cyrillic = [t for t in tokenlist if self.alphabet_detector.only_alphabet_chars(t, "CYRILLIC")]
+        return cyrillic
 
     # ======================================== #
     # ########### POS/LEMMATIZING ############ #
