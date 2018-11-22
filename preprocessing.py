@@ -20,7 +20,7 @@ from razdel import tokenize
 import word_lists
 # Plotting
 import matplotlib.pyplot as plt
-import seaborn as sns21
+import seaborn as sns
 
 logger = logging.getLogger()
 logging.basicConfig(level=logging.DEBUG, format='%(levelname)s %(name)s %(funcName)s %(message)s')

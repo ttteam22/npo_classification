@@ -8,7 +8,7 @@ from requests.exceptions import MissingSchema, ReadTimeout, ConnectTimeout, Conn
 def get_links(url):
     try:
         links = []
-        # domain = url.split(".")[0]
+        domain = url.split(".")[0]
         r = requests.get(url)
         html = r.text
         soup = BeautifulSoup(html, features="lxml")
@@ -40,7 +40,7 @@ def link_splitter(url_string):
 def get_text_contents(url) -> list:
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
     try:
-        r = requests.get(url, timeout=(5.05, 35), headers=headers)
+        r = requests.get(url, ю)
         html = r.text
         soup = BeautifulSoup(html)
         data = soup.findAll(text=True)
