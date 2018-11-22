@@ -43,7 +43,7 @@ class PreprocessingInterface(object):
         # self.ru_aot_dict = enchant.Dict("ru_RU")
         self.stop_words = set(word_lists.yandex_seo_stopwords +
                               stopwords.words('russian'))
-        self.unwanted_punct = ",.:!?0#№«»()-\"'_="
+        self.unwanted_punct = ",.:!?0#№«»()-\"'_=“„"
         self.unwanted_trans = str.maketrans(self.unwanted_punct,
                                             ''.join([' ' for x in self.unwanted_punct]))
         self.padding_punct = """!"#$%&\'()*_+-,;<=>?[\\]^`{|}~/«»"""
